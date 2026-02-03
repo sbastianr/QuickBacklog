@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "QuickBacklog",
+    "version": "1.0",
+    "description": "Sube tareas a Azure DevOps mediante n8n",
+    "permissions": [
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "options_page": "options.html"
+}

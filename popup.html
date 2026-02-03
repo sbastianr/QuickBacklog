@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>QuickBacklog 🚀</h2>
+
+        <div class="field-group">
+            <div class="row">
+                <select id="projectSelect">
+                    <option value="">Selecciona Proyecto + Backlog</option>
+                </select>
+                <button id="configBtn" title="Configurar">+</button>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <input type="text" id="taskTitle" placeholder="Nombre de la HU">
+        </div>
+
+        <div class="main-layout">
+            <div class="text-area-container">
+                <textarea id="taskDescription" placeholder="Descripción de la tarea..."></textarea>
+            </div>
+
+            <div id="dropzone" class="dropzone">
+                <span>+</span>
+                <p>Subir archivos para la descripción</p>
+                <input type="file" id="fileInput" hidden multiple>
+            </div>
+        </div>
+
+        <button id="sendBtn" class="send-button">Subir a Azure DevOps</button>
+        <div id="statusMessage"></div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
