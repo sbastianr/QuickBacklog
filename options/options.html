@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - QuickBacklog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="options.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Configuracion QuickBacklog 🚀</h2>
+
+        <!-- Azure PAT -->
+        <div class="section">
+            <label for="azureToken">Azure Personal Access Token (PAT)</label>
+            <input type="password" id="azureToken" placeholder="Pega tu token de Azure DevOps">
+            <p class="hint">Este token se guarda exclusivamente de forma local.</p>
+        </div>
+
+        <!-- Webhook Fetch -->
+        <div class="section">
+            <label for="fetchWebhook">Webhook n8n: Buscar Proyectos</label>
+            <input type="text" id="fetchWebhook" placeholder="https://n8n.../webhook/fetch-projects">
+            <button id="fetchBtn" class="btn-secondary">🔍 Buscar Proyectos en Azure</button>
+
+            <div id="projectListContainer" style="display: none;">
+                <label>Selecciona los proyectos con Backlog:</label>
+                <div id="projectChecklist"></div>
+            </div>
+        </div>
+
+        <!-- Webhook Create -->
+        <div class="section">
+            <label for="submitWebhook">Webhook n8n: Crear Tarea</label>
+            <input type="text" id="submitWebhook" placeholder="https://n8n.../webhook/create-task">
+        </div>
+
+        <button id="saveBtn" class="save-btn">Guardar Configuración</button>
+        <div id="status"></div>
+    </div>
+    <script src="options.js"></script>
+</body>
+
+</html>

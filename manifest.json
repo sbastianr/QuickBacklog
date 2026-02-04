@@ -4,10 +4,11 @@
     "version": "1.0",
     "description": "Sube tareas a Azure DevOps mediante n8n",
     "permissions": [
-        "storage"
+        "storage",
+        "identity"
     ],
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup/popup.html"
     },
-    "options_page": "options.html"
+    "options_page": "options/options.html"
 }
