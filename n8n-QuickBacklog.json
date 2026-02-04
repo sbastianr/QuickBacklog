@@ -1,0 +1,176 @@
+{
+  "name": "QuickBacklog",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/{compañia}/_apis/projects",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "api-version",
+              "value": "7.0"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.authorization }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        144,
+        -144
+      ],
+      "id": "afa1ab1c-6b12-4f4d-90b8-1dd5fac5d42b",
+      "name": "Obtener Proyectos"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el token del webhook\nconst token = $input.first().json.body.pat;\n\n// Crear el formato correcto: :token\nconst authString = ':' + token;\n\n// Codificar en Base64\nconst base64Auth = btoa(authString);\n\n// Devolver el authorization header\nreturn [\n  {\n    json: {\n      authorization: 'Basic ' + base64Auth\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        -144
+      ],
+      "id": "6056d236-8bfb-4f6c-979d-04d1c7aba014",
+      "name": "Generar Token"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.projects }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        768,
+        -144
+      ],
+      "id": "1ebcd5a0-0c31-4458-8725-2ba8038c60b6",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8ea8a0cd-3374-4153-a812-630890013d72",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -304,
+        -144
+      ],
+      "id": "163368a6-1436-48ec-8753-6b0fd06148a7",
+      "name": "Webhook",
+      "webhookId": "8ea8a0cd-3374-4153-a812-630890013d72"
+    },
+    {
+      "parameters": {
+        "jsCode": "// La respuesta viene en $input.first().json.value\nconst projects = $input.first().json.value;\n\n// Devolver cada proyecto como un item separado\nreturn projects.map(project => ({\n  json: project\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        -144
+      ],
+      "id": "8db69ad8-099c-4545-90a1-85b7bc3c3671",
+      "name": "Separa en Objetos"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Extraer solo los nombres\nconst projectNames = items.map(item => item.json.name);\n\nreturn [{\n  json: {\n    projects: projectNames,\n    totalProjects: projectNames.length\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        -144
+      ],
+      "id": "a5070724-9264-4a3e-b7d0-57e95b6aa1a1",
+      "name": "Separa los nombres"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Obtener Proyectos": {
+      "main": [
+        [
+          {
+            "node": "Separa en Objetos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Token": {
+      "main": [
+        [
+          {
+            "node": "Obtener Proyectos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generar Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separa en Objetos": {
+      "main": [
+        [
+          {
+            "node": "Separa los nombres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separa los nombres": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "90771b94-90e1-461d-b924-b8edebfa8c29",
+  "meta": {
+    "instanceId": "00f2aff42d4b5bf8ea068b6a44cf83e7297b98a3c90dd6356574eb96148735f6"
+  },
+  "id": "FY5cjFJr2jHsEl7v",
+  "tags": []
+}
