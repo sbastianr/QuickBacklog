@@ -68,6 +68,170 @@ h2 {
     gap: 0.4rem;
 }
 
+/* Custom Dropdown para HUs */
+.hu-container {
+    margin-bottom: 0.5rem;
+}
+
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-trigger {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 15px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 0.9rem;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.dropdown-trigger::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.dropdown-trigger:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--text-secondary);
+}
+
+.dropdown-options {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    background: #1e1e24;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    z-index: 50;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 8px;
+}
+
+.dropdown-option {
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    margin-bottom: 2px;
+}
+
+.dropdown-option:hover {
+    background: var(--glass);
+}
+
+.dropdown-option .hu-info {
+    flex: 1;
+}
+
+.dropdown-option .hu-info b {
+    color: var(--primary);
+    margin-right: 6px;
+}
+
+.dropdown-option .del-mini {
+    opacity: 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.dropdown-option:hover .del-mini {
+    opacity: 1;
+}
+
+.dropdown-option .del-mini:hover {
+    color: var(--error);
+}
+
+.btn-add-option {
+    padding: 10px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    border-top: 1px solid var(--border);
+    margin-top: 5px;
+    font-size: 0.85rem;
+}
+
+.btn-add-option:hover {
+    background: rgba(0, 120, 212, 0.1);
+}
+
+/* Modal Nueva HU */
+.hu-add-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hu-add-content {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    width: 80%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hu-add-content h3 {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.hu-add-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-cancel {
+    flex: 1;
+    background: var(--glass);
+    color: white;
+    border: 1px solid var(--border);
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-success {
+    flex: 2;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
 select,
 input[type="text"],
 textarea {
@@ -94,10 +258,29 @@ textarea {
     resize: none;
 }
 
+.row-time {
+    flex-direction: row !important;
+    gap: 10px;
+}
+
+.row-time input[type="number"] {
+    flex: 2;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: white;
+    font-family: inherit;
+}
+
+.row-time select {
+    flex: 1;
+}
+
 .main-layout {
     display: flex;
     gap: 10px;
-    height: 100px;
+    min-height: 100px;
 }
 
 .dropzone {
@@ -138,6 +321,20 @@ textarea {
     color: var(--text-secondary);
 }
 
+#statusMessage {
+    font-size: 0.8rem;
+    text-align: center;
+    min-height: 1.2rem;
+    margin-top: 5px;
+}
+
+.footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
 .send-button {
     background: var(--primary);
     color: white;
@@ -155,25 +352,21 @@ textarea {
     gap: 8px;
 }
 
-.send-button:hover {
-    background: var(--primary-hover);
-    transform: translateY(-1px);
+.clear-button {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.send-button:active {
-    transform: translateY(0);
-}
-
-.send-button:disabled {
-    background: var(--text-secondary);
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-#statusMessage {
-    font-size: 0.8rem;
-    text-align: center;
-    min-height: 1.2rem;
+.clear-button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    border-color: var(--text-secondary);
 }
 
 .file-count {

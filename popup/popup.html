@@ -28,8 +28,41 @@
             </select>
         </div>
 
-        <div class="input-group">
-            <input type="text" id="taskTitle" placeholder="Nombre de la User Story">
+        <!-- Selector de HU (Custom Dropdown) -->
+        <div id="huContainer" class="hu-container" style="display: none;">
+            <label
+                style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; display: block;">Historia
+                de Usuario:</label>
+            <div id="huDropdown" class="custom-dropdown">
+                <div id="huSelected" class="dropdown-trigger">Selecciona Historia de Usuario...</div>
+                <div id="huOptions" class="dropdown-options" style="display: none;">
+                    <!-- HUs dinámicas + botón añadir -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario flotante/oculto para nueva HU -->
+        <div id="huAddForm" class="hu-add-form" style="display: none;">
+            <div class="hu-add-content">
+                <h3>Nueva HU</h3>
+                <input type="text" id="huCodeManual" placeholder="Código (ej: HU-001)">
+                <input type="text" id="huNameManual" placeholder="Nombre (ej: Login)">
+                <div class="hu-add-actions">
+                    <button id="cancelHuBtn" class="btn-cancel">Cancelar</button>
+                    <button id="saveHuBtn" class="btn-success">Añadir</button>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="taskTitle">
+        <input type="hidden" id="taskCode">
+
+        <div class="input-group row-time">
+            <input type="number" id="taskTime" placeholder="Tiempo (Ej: 30)" min="1">
+            <select id="timeUnit">
+                <option value="min">Minutos</option>
+                <option value="h">Horas</option>
+            </select>
         </div>
 
         <div class="main-layout">
@@ -48,11 +81,14 @@
             </div>
         </div>
 
-        <button id="sendBtn" class="send-button">
-            Subir a Azure DevOps
-        </button>
-
-        <div id="statusMessage"></div>
+        <div class="footer-actions">
+            <button id="sendBtn" class="send-button">
+                Subir a Azure DevOps
+            </button>
+            <button id="clearBtn" class="clear-button">
+                Limpiar Todo
+            </button>
+        </div>
     </div>
     <script src="popup.js"></script>
 </body>
